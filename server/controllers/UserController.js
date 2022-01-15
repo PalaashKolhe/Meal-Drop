@@ -27,10 +27,18 @@ const registerUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+
+  const currentUserEmail = req.user.email;
+
   var userInfo = req.body;
   if (!userInfo) {
     console.log("Error: Empty update user request");
     return res.status(400).send("Empty update user request");
+  }
+
+  if (userInfo.email != currentUserEmail) {
+      console.log("No authorization for this action.");
+      return res.status(401).json({ msg: "No authorization detected. Login!" });
   }
 
   await mongoUsers.updateOne({ email: userInfo.email },
@@ -42,6 +50,19 @@ const updateUser = async (req, res) => {
   console.log("User successfully updated!");
   return res.status(200).send("User successfully updated");
 }
+
+const getUserInfo_handler = async (req, res) => {
+  try {
+    const { email } = req.user;
+    await mongoUsers.find({ email: email })
+      .then(response => {
+        return res.status(200).json(response);
+      })
+  } catch (error) {
+    res.status(500).json({err: error.message});
+  }
+}
+
 
 const loginUser_handler = async (req, res) => {
   try { 
@@ -97,7 +118,6 @@ const logoutUser_handler = async (req, res) => {
 }
 
 const isAuthUser_handler = (req, res) => {
-  console.log(req.user)
   res.status(200).json({msg: "Logged in!"});
 }
 
@@ -106,5 +126,6 @@ module.exports = {
   updateUser,
   loginUser_handler,
   logoutUser_handler,
-  isAuthUser_handler
+  isAuthUser_handler,
+  getUserInfo_handler
 };
