@@ -8,6 +8,7 @@ const cors = require("cors");
 
 // Root Imports
 const mainRouter = require('./routes/RouteController');
+const cookieParser = require('cookie-parser');
 
 // Initialization
 const app = express();
@@ -15,6 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(cookieParser())
 
 // Following line needs to be below the above bodyParser stuff
 app.use('/', mainRouter);

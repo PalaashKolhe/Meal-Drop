@@ -1,5 +1,6 @@
 // Mongo Imports
 const mongoUsers = require("../models/Users");
+const { generateAccessToken, generateRefreshToken } = require("./authHelper.js")
 
 const registerUser = async (req, res) => {
   var userInfo = req.body;
@@ -14,7 +15,7 @@ const registerUser = async (req, res) => {
 
   var newUser = new mongoUsers(userInfo);
 
-  await newUser.save(function (err, document) {
+  await newUser.save(function (err, user) {
     if (err) {
       console.log("Error: Mongo Create User Failed: ", err.message);
       res.status(400).send("Mongo Create User Failed");
@@ -42,5 +43,68 @@ const updateUser = async (req, res) => {
   return res.status(200).send("User successfully updated");
 }
 
-module.exports.registerUser = registerUser;
-module.exports.updateUser = updateUser;
+const loginUser_handler = async (req, res) => {
+  try { 
+    // --- Destructure out info
+    const {email, password} = req.body;
+
+    // Check Info
+    if (!email || !password) {
+        return res.status(400).json({msg: "Not all fields are valid!"});
+    }
+
+    // -- Check Password
+    const user = await mongoUsers.findOne({ email: email });
+
+    if (!user) 
+        return res.status(400).json({msg: "No account with that email found!"})
+
+    if (user.password != password) 
+        return res.status(401).json({msg: "Invalid credentials!"});
+    
+    // -- Send Credentials
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    res.cookie("accessToken", accessToken, {
+        maxAge: 900000, // 15 minutes
+        httpOnly: true
+    })
+
+    res.cookie("refreshToken", refreshToken, {
+        maxAge: 1.577e7, // 6 months
+        httpOnly: true
+    })
+
+    res.status(200).json({
+        user: {
+            name: user.name,
+            email: user.email,
+            isFoodbank: user.isFoodbank
+        }
+    })
+
+  } catch (error) {
+      res.status(500).json({err: error.message});
+  }
+}
+
+const logoutUser_handler = async (req, res) => {
+  const user = req.user;
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+  res.status(200).json(user);
+}
+
+const isAuthUser_handler = (req, res) => {
+  console.log(req.user)
+  res.status(200).json({msg: "Logged in!"});
+}
+
+module.exports = {
+  registerUser,
+  updateUser,
+  loginUser_handler,
+  logoutUser_handler,
+  isAuthUser_handler
+};
