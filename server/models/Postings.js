@@ -16,7 +16,7 @@ const FoodPostingsSchema = new FoodPostings({
     type: String,
     required: false,
   },
-  toFoodBankAddress: {
+  toFoodbankAddress: {
     type: String,
     required: false,
   },

@@ -97,7 +97,6 @@ const logoutUser_handler = async (req, res) => {
 }
 
 const isAuthUser_handler = (req, res) => {
-  console.log(req.user)
   res.status(200).json({msg: "Logged in!"});
 }
 
