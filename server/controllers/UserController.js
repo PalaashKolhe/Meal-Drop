@@ -1,3 +1,4 @@
+// Mongo Imports
 const mongoUsers = require("../models/Users");
 const { generateAccessToken, generateRefreshToken } = require("./authHelper.js")
 
@@ -32,9 +33,14 @@ const updateUser = async (req, res) => {
     return res.status(400).send("Empty update user request");
   }
 
-  var newUser = new mongoUsers(userInfo);
-
-  await newUser.updateOne({})
+  await mongoUsers.updateOne({ email: userInfo.email },
+    userInfo,
+  ).catch((err) => {
+    console.log("Error on user update: ", err);
+    return res.status(400).send("Error on user update");
+  });
+  console.log("User successfully updated!");
+  return res.status(200).send("User successfully updated");
 }
 
 const loginUser_handler = async (req, res) => {

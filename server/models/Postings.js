@@ -15,16 +15,22 @@ const FoodPostingsSchema = new FoodPostings({
   toFoodbankName: {
     type: String,
     required: false,
-    default: "",
   },
   toFoodBankAddress: {
     type: String,
     required: false,
-    default: "",
   },
-  pickupTimeSlot: {
-    type: String,
+  pickupTimeBegin: {
+    type: Number,
     required: true,
+    min: 0,
+    max: 2400,
+  },
+  pickupTimeEnd: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 2400,
   },
   deliveryMethod: {
     type: String,
