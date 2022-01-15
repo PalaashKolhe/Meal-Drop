@@ -19,7 +19,7 @@ app.use(cors());
 // Following line needs to be below the above bodyParser stuff
 // app.use('/', Routes);
 
-const CONNECTION_URL = `mongodb+srv://palaash:${process.env.MONGO_PASSWORD}@meal-drop-server.tmlr2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const CONNECTION_URL = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@meal-drop-server.tmlr2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
