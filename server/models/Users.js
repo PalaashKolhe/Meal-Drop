@@ -10,7 +10,6 @@ const UsersSchema = new Users({
   address: {
     type: String,
     required: false,
-    unique: true,
   },
   openHours: {
     type: String,
