@@ -7,12 +7,11 @@ import MainPage from "./components/MainPage/MainPage";
 import AuthPage from "./components/AuthPage/AuthPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 
-
 export default function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <h1>MealDrop</h1>
+        {/* <h1>MealDrop</h1> */}
       </div>
 
       <Switch>
