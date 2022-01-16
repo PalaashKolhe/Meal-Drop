@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import MainPage from "./components/MainPage/MainPage";
 import AuthPage from "./components/AuthPage/AuthPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import ViewPost from "./components/ViewPost/ViewPost";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
             <Route path="/main" component={MainPage} exact/>
             <Route path="/auth" component={AuthPage} exact/>
             <Route path="/view_profile" component={ProfilePage} exact/>
+            <Route path="/view_post/:id" component={ViewPost} exact />
         </Switch>
       </div>
     </BrowserRouter>

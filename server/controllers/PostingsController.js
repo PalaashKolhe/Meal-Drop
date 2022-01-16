@@ -26,10 +26,22 @@ const editPosting = async (req, res) => {
 
 }
 
+const getOnePost = async (req, res) => {
+    const { _id } = req.body;
+    var onePost = await mongoFoodPostings.findById(_id);
+    res.status(200).json(onePost);
+}
+
+const deleteOnePost = async (req, res) => {
+  const { _id } = req.body;
+  await mongoFoodPostings.findByIdAndDelete(_id);
+  res.sendStatus(204);
+}
+
 const getPostings = async (req, res) => {
   var allPostings = await mongoFoodPostings.find();
   return res.status(200).json(allPostings);
 }
 
-module.exports = { createPosting, getPostings };
+module.exports = { createPosting, getPostings, getOnePost, deleteOnePost };
 
