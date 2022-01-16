@@ -30,7 +30,7 @@ function SignIn(props) {
         let password = data.get('password');
         
         if (isLogin) {
-            axios.post("http://localhost:5000/user/login",{ email, password }, { withCredentials: true })
+            axios.post(`${process.env.REACT_APP_HOST_URL}user/login`,{ email, password }, { withCredentials: true })
                 .then(res => {
                     console.log("Redirecting!!!");
                     props.history.push("/main");
@@ -40,7 +40,7 @@ function SignIn(props) {
                 });
         } else {
             let name = data.get('name');
-            axios.post("http://localhost:5000/user/create", { email, password, name, isFoodbank }, { withCredentials: true })
+            axios.post(`${process.env.REACT_APP_HOST_URL}user/create`, { email, password, name, isFoodbank }, { withCredentials: true })
                 .then(res => {
                     props.history.push("/view_profile");
                 })
@@ -156,7 +156,7 @@ const AuthPage = () => {
     const history = useHistory();
 
     useEffect(async () => {
-        await axios.get("http://localhost:5000/user/isAuth", { withCredentials: true })
+        await axios.get(`${process.env.REACT_APP_HOST_URL}user/isAuth`, { withCredentials: true })
             .then(res => {
                 alert("You're already logged in!");
             })
