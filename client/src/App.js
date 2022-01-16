@@ -10,13 +10,14 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 export default function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route path="/main" component={MainPage} exact/>
-        <Route path="/auth" component={AuthPage} exact/>
-        <Route path="/view_profile" component={ProfilePage} exact/>
-      </Switch>
-
+      <div className="App">
+        <Switch>
+            <Route exact path="/" component={LandingPage} />
+            <Route path="/main" component={MainPage} exact/>
+            <Route path="/auth" component={AuthPage} exact/>
+            <Route path="/view_profile" component={ProfilePage} exact/>
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }

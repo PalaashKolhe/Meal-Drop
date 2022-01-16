@@ -158,8 +158,7 @@ const AuthPage = () => {
     useEffect(async () => {
         await axios.get("http://localhost:5000/user/isAuth", { withCredentials: true })
             .then(res => {
-                console.log("You're already logged in!")
-                return history.push("/main");
+                alert("You're already logged in!");
             })
             .catch(e => {
                 console.log(e.response);
