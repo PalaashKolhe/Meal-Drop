@@ -1,5 +1,6 @@
 // Main imports
 import { React, Component } from "react";
+import { Redirect, Link } from "react-router-dom";
 
 // CSS imports
 import "./PostingTile.css";
@@ -20,6 +21,8 @@ function tConvert(time) {
   return time;
 }
 
+const LinkTheme = {textDecoration: "None", color: "black"};
+
 class PostingTile extends Component {
   constructor(props) {
     super(props);
@@ -28,16 +31,23 @@ class PostingTile extends Component {
   componentDidMount() {
   }
 
+  // handleClick = () => {
+  //   console.log(this.props.postingData._id);
+  //   return <Redirect to={`/view_post/${this.props.postingData._id}`} />
+  // }
+
   render() {
     return (
-      <div className="flex-row posting-row tile-container start-center">
-        <img className="posting-image" src="https://www.svgrepo.com/show/58017/restaurant-symbol-of-cutlery-in-a-circle.svg"></img>
-        <div className="flex-column start-center restaurant-details">
-          <p className="title">{this.props.postingData.fromRestaurantName}</p>
-          <p className="address">{this.props.postingData.fromRestaurantAddress}</p>
-          <p className="pickupTimes">Pickup Time: {tConvert(this.props.postingData.pickupTimeBegin)} - {tConvert(this.props.postingData.pickupTimeEnd)}</p>
+      <Link to={`/view_post/${this.props.postingData._id}`} style={LinkTheme}> 
+        <div className="flex-row posting-row tile-container start-center">
+          <img className="posting-image" src="https://www.svgrepo.com/show/58017/restaurant-symbol-of-cutlery-in-a-circle.svg"></img>
+          <div className="flex-column start-center restaurant-details">
+            <p className="title">{this.props.postingData.fromRestaurantName}</p>
+            <p className="address">{this.props.postingData.fromRestaurantAddress}</p>
+            <p className="pickupTimes">Pickup Time: {tConvert(this.props.postingData.pickupTimeBegin)} - {tConvert(this.props.postingData.pickupTimeEnd)}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     )
   }
 }

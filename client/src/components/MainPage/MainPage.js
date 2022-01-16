@@ -1,5 +1,6 @@
 // main imports
 import { React, Component } from 'react'
+import { Redirect, Link } from 'react-router-dom';
 import axios from "axios";
 
 // css imports
@@ -36,7 +37,7 @@ class MainPage extends Component {
   componentDidMount() {
     this.getPostings();
     var authURL = `${process.env.REACT_APP_HOST_URL}user/isAuth`;
-    axios.get(authURL)
+    axios.get(authURL, { withCredentials: true })
       .then(res => {
         this.setState({ authorized: true });
       }).catch(err => {
@@ -67,6 +68,11 @@ class MainPage extends Component {
     })
     this.setState({ latlng: latlng });
   }
+
+  handlePostClick = (posting_id) => {
+    console.log("HERE");
+    return <Redirect to={`/view_post/${posting_id}`} /> 
+  };
 
   render() {
     var postings = this.state.postings;
