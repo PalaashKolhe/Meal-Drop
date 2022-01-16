@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import "../../global.css";
 import "./MainPage.css";
 
+
 // Root imports
 import Button from '@mui/material/Button';
 import PostingTile from './Components/PostingTile';
