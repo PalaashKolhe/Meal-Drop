@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -30,13 +31,21 @@ function SignIn() {
         
         if (isLogin) {
             axios.post("http://localhost:5000/user/login",{ email, password }, { withCredentials: true })
-                .then(res => console.log(res))
-                .catch(e => console.log(e));
+                .then(res => {
+                    return <Redirect to="/main" />
+                })
+                .catch(e => {
+                    alert(e.response.data.msg);
+                });
         } else {
             let name = data.get('name');
             axios.post("http://localhost:5000/user/create", { email, password, name, isFoodbank })
-                .then(res => console.log(res))
-                .catch(e => console.log(e));
+                .then(res => {
+                    <Redirect to="/view_profile" />
+                })
+                .catch(e => {
+                    alert(e.response.data);
+                });
         }
 
 
