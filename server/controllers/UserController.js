@@ -36,18 +36,13 @@ const registerUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-
-  const currentUserEmail = req.user.email;
-
   var userInfo = req.body;
+  userInfo.email = req.user.email;
+
+  console.log(userInfo);
   if (!userInfo) {
     console.log("Error: Empty update user request");
     return res.status(400).send("Empty update user request");
-  }
-
-  if (userInfo.email != currentUserEmail) {
-      console.log("No authorization for this action.");
-      return res.status(401).json({ msg: "No authorization detected. Login!" });
   }
 
   await mongoUsers.updateOne({ email: userInfo.email },

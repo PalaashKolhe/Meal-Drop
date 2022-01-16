@@ -45,6 +45,8 @@ class CreatePostingModal extends Component {
       notes: this.state.notes,
     }, { withCredentials: true }).then(res => {
       console.log("Posting Successfully Created!");
+      this.props.changeValue("toggleModal", false);
+      this.forceUpdate();
     }).catch(err => {
       console.log("Error: ", err);
     })
@@ -61,14 +63,14 @@ class CreatePostingModal extends Component {
           <div className="flex-row" style={{ width: "100%", justifyContent: "space-between" }}>
             <div className='flex-column create-posting-left'>
               <AddressContainer changeValue={this.changeValue.bind(this)} />
-              <TextField onChange={() => { this.setState({ pickupTimeBegin: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup Start Period (MM:HR)" />
-              <TextField onChange={() => { this.setState({ pickupTimeEnd: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup End Period (MM:HR)" />
+              <TextField onChange={() => { this.setState({ pickupTimeBegin: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup Start Period (HH:MM)" />
+              <TextField onChange={() => { this.setState({ pickupTimeEnd: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup End Period (HH:MM)" />
             </div>
             <div className='flex-column create-posting-left'>
               <TextField onChange={() => { this.setState({ notes: event.target.value }) }} className="pickup-notes" multiline fullWidth rows={6} size="large" label="Pickup Notes" />
             </div>
           </div>
-          <Button onClick={() => this.submitForm()} variant="contained" sx={{ width: "50px" }} className="create-posting">
+          <Button onClick={() => this.submitForm()} variant="contained" style={{width: "25%"}} className="create-posting">
             Create
           </Button>
         </div>
