@@ -5,7 +5,7 @@ const postingRouter = require("express").Router();
 
 postingRouter.post("/create", verify, createPosting);
 postingRouter.get("/all", getPostings);
-postingRouter.get("/one", getOnePost);
+postingRouter.get("/one/:id", getOnePost);
 postingRouter.post("/delete", deleteOnePost);
 
 // userRouter.post("/edit", updateUser);

@@ -28,14 +28,16 @@ const editPosting = async (req, res) => {
 }
 
 const getOnePost = async (req, res) => {
-    const { _id } = req.body;
-    var onePost = await mongoFoodPostings.findById(_id);
-    res.status(200).json(onePost);
+    var onePost = await mongoFoodPostings.findById(req.params.id);
+    if (onePost) {
+      res.status(200).json(onePost);
+    } else {
+      res.status(400).send("No post found!");
+    }
 }
 
 const deleteOnePost = async (req, res) => {
-  const { _id } = req.body;
-  await mongoFoodPostings.findByIdAndDelete(_id);
+  await mongoFoodPostings.findByIdAndDelete(req.body.id);
   res.sendStatus(204);
 }
 
