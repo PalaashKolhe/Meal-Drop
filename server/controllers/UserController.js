@@ -17,6 +17,19 @@ const registerUser = async (req, res) => {
     if (err) {
       res.status(400).send("Mongo Create User Failed");
     } else {
+      const accessToken = generateAccessToken(user);
+      const refreshToken = generateRefreshToken(user);
+
+      res.cookie("accessToken", accessToken, {
+          maxAge: 900000, // 15 minutes
+          httpOnly: true
+      })
+
+      res.cookie("refreshToken", refreshToken, {
+          maxAge: 1.577e7, // 6 months
+          httpOnly: true
+      })
+      
       res.status(200).send("Mongo User successfully created");
     }
   });
