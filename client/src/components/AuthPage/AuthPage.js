@@ -40,7 +40,7 @@ function SignIn(props) {
                 });
         } else {
             let name = data.get('name');
-            axios.post("http://localhost:5000/user/create", { email, password, name, isFoodbank })
+            axios.post("http://localhost:5000/user/create", { email, password, name, isFoodbank }, { withCredentials: true })
                 .then(res => {
                     props.history.push("/view_profile");
                 })

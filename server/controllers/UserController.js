@@ -4,7 +4,7 @@ const { generateAccessToken, generateRefreshToken } = require("./authHelper.js")
 
 const registerUser = async (req, res) => {
   var userInfo = req.body;
-  if (!userInfo || !userInfo.name || !userInfo.email || !userInfo.password || userInfo.isFoodbank) {
+  if (!userInfo || !userInfo.name || !userInfo.email || !userInfo.password || !userInfo.isFoodbank) {
     return res.status(400).send("Input body empty or all fields not entered");
   }
   if (userInfo.name.length == 0 || userInfo.email.length == 0 || userInfo.password.length == 0) {
