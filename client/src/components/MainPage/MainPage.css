@@ -21,3 +21,9 @@
   width: 100%;
   border-radius: 5px;
 }
+
+.welcome {
+  padding-left: 20px;
+  font-weight: 500;
+  font-size: 24px;
+}

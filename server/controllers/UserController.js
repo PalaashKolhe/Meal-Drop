@@ -124,7 +124,7 @@ const logoutUser_handler = async (req, res) => {
 }
 
 const isAuthUser_handler = (req, res) => {
-  res.status(200).json({msg: "Logged in!"});
+  res.status(200).send(req.user);
 }
 
 module.exports = {

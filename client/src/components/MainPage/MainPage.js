@@ -26,6 +26,7 @@ class MainPage extends Component {
       postings: [],
       latlng: [],
       authorized: false,
+      authObject: {},
       toggleModal: false,
     };
   }
@@ -39,7 +40,7 @@ class MainPage extends Component {
     var authURL = `${process.env.REACT_APP_HOST_URL}user/isAuth`;
     axios.get(authURL, { withCredentials: true })
       .then(res => {
-        this.setState({ authorized: true });
+        this.setState({ authorized: true, authObject: res.data });
       }).catch(err => {
         this.setState({ authorized: false });
       })
@@ -71,7 +72,7 @@ class MainPage extends Component {
 
   handlePostClick = (posting_id) => {
     console.log("HERE");
-    return <Redirect to={`/view_post/${posting_id}`} /> 
+    return <Redirect to={`/view_post/${posting_id}`} />
   };
 
   render() {
@@ -81,13 +82,18 @@ class MainPage extends Component {
     return (
       <>
         {this.state.toggleModal && (
-          <CreatePostingModal changeValue={this.changeValue.bind(this)}/>
+          <CreatePostingModal changeValue={this.changeValue.bind(this)} />
         )}
         <div className='container flex-column center-center' >
 
           <div className="flex-row space-between welcome-banner">
-            <div>
-              Welcome!
+            <div className='flex-row start-center'>
+              <Link to="/main">
+                <img src='images/logo.png' width="90px"></img>
+              </Link>
+              <div className="welcome">
+                Welcome {!auth ? "Guest" : this.state.authObject.name}!
+              </div>
             </div>
             <Button variant="outlined">
               Manage Personal Info
