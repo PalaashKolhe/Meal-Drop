@@ -6,7 +6,7 @@ import { Redirect, Link } from "react-router-dom";
 import "./PostingTile.css";
 
 // Root imports
-function tConvert(time) {
+export function tConvert(time) {
   var isPm = false;
   if (time > 1200) {
     isPm = true;
