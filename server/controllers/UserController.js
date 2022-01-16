@@ -4,12 +4,10 @@ const { generateAccessToken, generateRefreshToken } = require("./authHelper.js")
 
 const registerUser = async (req, res) => {
   var userInfo = req.body;
-  if (!userInfo || !userInfo.name || !userInfo.email || !userInfo.password) {
-    console.log("Error: Input body empty or all fields not entered");
+  if (!userInfo || !userInfo.name || !userInfo.email || !userInfo.password || userInfo.isFoodbank) {
     return res.status(400).send("Input body empty or all fields not entered");
   }
   if (userInfo.name.length == 0 || userInfo.email.length == 0 || userInfo.password.length == 0) {
-    console.log("Error: Required fields not entered for user creation");
     return res.status(400).send("Required fields not entered");
   }
 
@@ -17,10 +15,8 @@ const registerUser = async (req, res) => {
 
   await newUser.save(function (err, user) {
     if (err) {
-      console.log("Error: Mongo Create User Failed: ", err.message);
       res.status(400).send("Mongo Create User Failed");
     } else {
-      console.log("Mongo User successfully created");
       res.status(200).send("Mongo User successfully created");
     }
   });
@@ -77,11 +73,8 @@ const loginUser_handler = async (req, res) => {
     // -- Check Password
     const user = await mongoUsers.findOne({ email: email });
 
-    if (!user) 
-        return res.status(400).json({msg: "No account with that email found!"})
-
-    if (user.password != password) 
-        return res.status(401).json({msg: "Invalid credentials!"});
+    if (!user) return res.status(400).json({msg: "No account with that email found!"})
+    if (user.password != password) return res.status(401).json({msg: "Invalid credentials!"});
     
     // -- Send Credentials
     const accessToken = generateAccessToken(user);

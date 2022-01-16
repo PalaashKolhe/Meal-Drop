@@ -7,7 +7,6 @@ import MainPage from "./components/MainPage/MainPage";
 import AuthPage from "./components/AuthPage/AuthPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 
-
 export default function App() {
   return (
     <BrowserRouter>
@@ -15,7 +14,7 @@ export default function App() {
         <Route exact path="/" component={LandingPage} />
         <Route path="/main" component={MainPage} exact/>
         <Route path="/auth" component={AuthPage} exact/>
-        <Route path="/viewProfile/:id" component={ProfilePage} exact/>
+        <Route path="/view_profile" component={ProfilePage} exact/>
       </Switch>
 
     </BrowserRouter>

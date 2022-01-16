@@ -19,6 +19,7 @@ const generateRefreshToken = (user) => {
 const verify = (req, res, next) => {
     try {
         const { accessToken, refreshToken } = req.cookies;
+        // console.log(req.cookies);
         let handled = false;
 
         if (accessToken) {
