@@ -13,6 +13,9 @@ import SimpleMap from '../MainPage/Components/GoogleMap';
 import "../../global.css";
 import "./ViewPost.css";
 import "../MainPage/MainPage.css";
+import "../ProfilePage/ProfilePage.css";
+
+const LinkTheme = { textDecoration: "None", color: "black" };
 
 const ViewPost = () => {
   const URL = process.env.REACT_APP_HOST_URL;
@@ -66,25 +69,42 @@ const ViewPost = () => {
     <p><b>Notes:</b> {Post.notes == "" ? "None" : Post.notes}</p>
     <hr style={{ color: "black", width: "100%" }} />
     <Button variant='contained' style={{ marginTop: "10px" }} onClick={e => handlePickUp()} >I can pick this up</Button>
-    <Button variant='contained' style={{ marginTop: "10px", backgroundColor: "black" }} onClick={e => alert("Uber hasn't helped us yet.")}>Schedule Uber Delivery</Button>
-    <Button variant='contained' disabled style={{ marginTop: "10px" }}>Use one of our drivers</Button>
+    <Button variant='contained' style={{ marginTop: "10px", backgroundColor: "black" }} onClick={e => alert("Coming soon!")}>Schedule Uber Delivery (Beta)</Button>
+    <Button variant='contained' style={{ marginTop: "10px" }} onClick={e => alert("Coming soon!")}>Use one of our drivers (Beta)</Button>
   </div>) : (
     <h3>Loading...</h3>);
 
   return (
     <>
-      <div className='container flex-column center-center' style={{width: "80%"}} >
+      <div className='container flex-column center-center' style={{ width: "80%" }} >
+        <div className="flex-row start-center" style={{ marginBottom: "20px", justifyContent: "space-between" }}>
+          <div className='flex-row start-center'>
+            <Link to="/main">
+              <img src='../images/logo.png' width="90px"></img>
+            </Link>
+            <div className="flex-column" style={{ marginLeft: "25px" }}>
+              <div className="profile-header">
+                View Posting
+              </div>
+              <div className="profile-subheader">
+                {Post.fromRestaurantName}
+              </div>
+            </div>
+          </div>
+          <div className='flew-column start-center'>
+            <Link to="/main" style={LinkTheme}>
+              <Button variant='outlined' style={{ color: "black", borderColor:"black", height: "50px", width: "150px", textDecoration: "none" }}>Back</Button>
+            </Link>
+          </div>
+        </div>
         <div id="viewpost-page" style={{ justifyContent: 'space-between' }} className='flex-row '>
           <div style={{ width: '49%', height: "100%" }}>
             {PostInfo}
           </div>
-          <div className="maps-row" style={{padding: "0"}}>
+          <div className="maps-row" style={{ padding: "0" }}>
             <SimpleMap latlng={latlng} />
           </div>
         </div>
-        <Link to="/main">
-          <Button variant='contained' style={{ marginTop: "40px", textDecoration: "none", width: '25%' }}>Back</Button>
-        </Link>
       </div>
     </>
   )
