@@ -11,13 +11,11 @@ import Button from '@mui/material/Button';
 import PostingTile from './Components/PostingTile';
 import Geocode from "react-geocode";
 import SimpleMap from './Components/GoogleMap';
+import CreatePostingModal from './Components/CreatePosting';
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 Geocode.setApiKey(process.env.REACT_APP_GCP_KEY);
-// set response language. Defaults to english.
 Geocode.setLanguage("en");
-// set response region. Its optional.
-// A Geocoding request with region=es (Spain) will return the Spanish city.
 Geocode.setRegion("es");
 
 class MainPage extends Component {
@@ -26,15 +24,28 @@ class MainPage extends Component {
     this.state = {
       postings: [],
       latlng: [],
+      authorized: false,
+      toggleModal: false,
     };
+  }
+
+  changeValue = (value, param) => {
+    this.setState({ [value]: param });
   }
 
   componentDidMount() {
     this.getPostings();
+    var authURL = `${process.env.REACT_APP_HOST_URL}user/isAuth`;
+    axios.get(authURL)
+      .then(res => {
+        this.setState({ authorized: true });
+      }).catch(err => {
+        this.setState({ authorized: false });
+      })
   }
 
   getPostings = async () => {
-    const getPostingsURL = `http://localhost:5000/posting/all`;
+    const getPostingsURL = `${process.env.REACT_APP_HOST_URL}posting/all`;
     await axios.get(getPostingsURL)
       .then(res => {
         this.setState({ postings: res.data }, () => this.getLatLng());
@@ -60,36 +71,43 @@ class MainPage extends Component {
   render() {
     var postings = this.state.postings;
     var latlng = this.state.latlng;
+    var auth = this.state.authorized;
     return (
-      <div className='container flex-column center-center' >
-        <div className="flex-row space-between welcome-banner">
-          <div>
-            Welcome!
+      <>
+        {this.state.toggleModal && (
+          <CreatePostingModal changeValue={this.changeValue.bind(this)}/>
+        )}
+        <div className='container flex-column center-center' >
+
+          <div className="flex-row space-between welcome-banner">
+            <div>
+              Welcome!
+            </div>
+            <Button variant="outlined">
+              Manage Personal Info
+            </Button>
           </div>
-          <Button variant="outlined">
-            Manage Personal Info
-          </Button>
-        </div>
-        <div className='flex-row space-between start main-container'>
-          {postings.length !== 0 && (
-            <>
-              <div className='postings-row'>
-                <Button variant="contained" sx={{ width: "100%", height: "45px" }}>Create a Posting</Button>
-                {
-                  postings.map((posting, index) => {
-                    return <PostingTile key={index} postingData={posting} />
-                  })
-                }
-              </div>
-              {latlng.length !== 0 && (
-                <div className='maps-row'>
-                  <SimpleMap latlng={this.state.latlng} />
+          <div className='flex-row space-between start main-container'>
+            {postings.length !== 0 && (
+              <>
+                <div className='postings-row'>
+                  <Button variant="contained" sx={{ width: "100%", height: "45px" }} onClick={() => { this.setState({ toggleModal: true }) }} >Create a Posting</Button>
+                  {
+                    postings.map((posting, index) => {
+                      return <PostingTile key={index} postingData={posting} />
+                    })
+                  }
                 </div>
-              )}
-            </>
-          )}
+                {latlng.length !== 0 && (
+                  <div className='maps-row'>
+                    <SimpleMap latlng={this.state.latlng} />
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 }
