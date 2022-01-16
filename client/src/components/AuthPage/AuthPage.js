@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Redirect } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Redirect, useHistory } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,7 +17,7 @@ import "./AuthPage.css";
 
 const theme = createTheme();
 
-function SignIn() {
+function SignIn(props) {
 
     const [isLogin, setIsLogin] = useState(false);
     const [isFoodbank, setFoodbank] = useState(false);
@@ -32,7 +32,8 @@ function SignIn() {
         if (isLogin) {
             axios.post("http://localhost:5000/user/login",{ email, password }, { withCredentials: true })
                 .then(res => {
-                    return <Redirect to="/main" />
+                    console.log("Redirecting!!!");
+                    props.history.push("/main");
                 })
                 .catch(e => {
                     alert(e.response.data.msg);
@@ -41,7 +42,7 @@ function SignIn() {
             let name = data.get('name');
             axios.post("http://localhost:5000/user/create", { email, password, name, isFoodbank })
                 .then(res => {
-                    <Redirect to="/view_profile" />
+                    props.history.push("/view_profile");
                 })
                 .catch(e => {
                     alert(e.response.data);
@@ -152,9 +153,22 @@ function SignIn() {
 
 const AuthPage = () => {
 
+    const history = useHistory();
+
+    useEffect(async () => {
+        await axios.get("http://localhost:5000/user/isAuth", { withCredentials: true })
+            .then(res => {
+                console.log("You're already logged in!")
+                return history.push("/main");
+            })
+            .catch(e => {
+                console.log(e.response);
+            });
+    }, [])
+
     return (
         <div id="auth_page" className="flex-column center-center">
-            <SignIn />
+            <SignIn history={history} />
         </div>
     )
 }
