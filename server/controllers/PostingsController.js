@@ -8,6 +8,7 @@ const createPosting = async (req, res) => {
     return res.status(400).send("Input body empty or all fields not entered");
   }
 
+  postingInfo.fromRestaurantName = req.user.name;
   var newPosting = new mongoFoodPostings(postingInfo);
 
   await newPosting.save(function (err, document) {

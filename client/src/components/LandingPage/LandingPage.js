@@ -4,7 +4,7 @@ import "./LandingPage.css";
 import { Button } from '@mui/material';
 import "../../global.css";
 
-const buttonTheme = {marginRight: "50px", color: "black", border: "2px solid black"}
+const buttonTheme = {marginRight: "30px", color: "black", border: "2px solid grey"}
 const LinkTheme = {textDecoration: "None", color: "black"};
 
 const LandingPage = () => {

@@ -14,8 +14,8 @@
 }
 
 .modal-container .modal {
-  width: 55%;
-  height: 80%;
+  width: 45%;
+  height: 50%;
   background: white;
   display: flex;
   align-items: flex-start;
@@ -58,5 +58,5 @@
 }
 
 .create-posting {
-  margin-top: 20px !important;
+  margin-top: 40px !important;
 }
