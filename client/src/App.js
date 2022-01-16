@@ -7,7 +7,6 @@ import MainPage from "./components/MainPage/MainPage";
 import AuthPage from "./components/AuthPage/AuthPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 
-
 export default function App() {
   return (
     <BrowserRouter>

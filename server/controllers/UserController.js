@@ -4,7 +4,7 @@ const { generateAccessToken, generateRefreshToken } = require("./authHelper.js")
 
 const registerUser = async (req, res) => {
   var userInfo = req.body;
-  if (!userInfo || !userInfo.name || !userInfo.email || !userInfo.password) {
+  if (!userInfo || !userInfo.name || !userInfo.email || !userInfo.password || userInfo.isFoodbank) {
     console.log("Error: Input body empty or all fields not entered");
     return res.status(400).send("Input body empty or all fields not entered");
   }
@@ -77,11 +77,8 @@ const loginUser_handler = async (req, res) => {
     // -- Check Password
     const user = await mongoUsers.findOne({ email: email });
 
-    if (!user) 
-        return res.status(400).json({msg: "No account with that email found!"})
-
-    if (user.password != password) 
-        return res.status(401).json({msg: "Invalid credentials!"});
+    if (!user) return res.status(400).json({msg: "No account with that email found!"})
+    if (user.password != password) return res.status(401).json({msg: "Invalid credentials!"});
     
     // -- Send Credentials
     const accessToken = generateAccessToken(user);
