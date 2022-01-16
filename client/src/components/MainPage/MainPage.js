@@ -19,6 +19,8 @@ Geocode.setApiKey(process.env.REACT_APP_GCP_KEY);
 Geocode.setLanguage("en");
 Geocode.setRegion("es");
 
+const LinkTheme = {textDecoration: "None", color: "black"};
+
 class MainPage extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,7 @@ class MainPage extends Component {
 
   changeValue = (value, param) => {
     this.setState({ [value]: param });
+    this.forceUpdate();
   }
 
   componentDidMount() {
@@ -95,9 +98,11 @@ class MainPage extends Component {
                 Welcome {!auth ? "Guest" : this.state.authObject.name}!
               </div>
             </div>
-            <Button variant="outlined">
-              Manage Personal Info
-            </Button>
+            <Link style={LinkTheme} to="/view_profile">
+              <Button variant="outlined">
+                Manage Personal Info
+              </Button>
+            </Link>
           </div>
           <div className='flex-row space-between start main-container'>
             {postings.length !== 0 && (
