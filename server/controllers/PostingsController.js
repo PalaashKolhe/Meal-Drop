@@ -3,7 +3,7 @@ const mongoFoodPostings = require("../models/Postings");
 
 const createPosting = async (req, res) => {
   var postingInfo = req.body;
-  if (!postingInfo || !postingInfo.fromRestaurantName || !postingInfo.pickupTimeBegin || !postingInfo.pickupTimeEnd || !postingInfo.fromRestaurantAddress) {
+  if (!postingInfo || !postingInfo.pickupTimeBegin || !postingInfo.pickupTimeEnd || !postingInfo.fromRestaurantAddress) {
     console.log("Error: Input body empty or all fields not entered");
     return res.status(400).send("Input body empty or all fields not entered");
   }
