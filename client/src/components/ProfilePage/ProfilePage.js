@@ -49,6 +49,7 @@ class ProfilePage extends Component {
       address: overallAddress,
     }, { withCredentials: true }).then(res => {
       console.log("User Successfully Updated!");
+      this.props.history.push("/main");
     }).catch(err => {
       console.log("Error: ", err);
     })
