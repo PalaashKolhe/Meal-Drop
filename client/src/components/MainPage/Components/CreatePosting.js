@@ -1,6 +1,7 @@
 // Main imports
 import { Button, TextField } from '@mui/material';
 import { React, Component } from 'react'
+import axios from "axios";
 
 // Root Imports
 import AddressContainer from '../../Shared/AddressContainer';
@@ -19,6 +20,7 @@ class CreatePostingModal extends Component {
       country: "",
       pickupTimeBegin: "",
       pickupTimeEnd: "",
+      notes: "",
     };
   }
 
@@ -32,15 +34,16 @@ class CreatePostingModal extends Component {
 
   submitForm() {
     var { street, city, province, postalCode, country } = this.state;
-    var overallAddress = street + city + province + postalCode + country;
+    var overallAddress = [street, city, province, postalCode, country].join(' ');
 
-    var createPostingURL = `${process.env.RREACT_APP_HOST_URL}posting/create`;
+    var createPostingURL = `${process.env.REACT_APP_HOST_URL}posting/create`;
 
     axios.post(createPostingURL, {
       fromRestaurantAddress: overallAddress,
       pickupTimeBegin: this.state.pickupTimeBegin,
-      pickupTimeEnd: this.state.pickupTimeEnd
-    }).then(res => {
+      pickupTimeEnd: this.state.pickupTimeEnd,
+      notes: this.state.notes,
+    }, { withCredentials: true }).then(res => {
       console.log("Posting Successfully Created!");
     }).catch(err => {
       console.log("Error: ", err);
@@ -58,11 +61,11 @@ class CreatePostingModal extends Component {
           <div className="flex-row" style={{ width: "100%", justifyContent: "space-between" }}>
             <div className='flex-column create-posting-left'>
               <AddressContainer changeValue={this.changeValue.bind(this)} />
-              <TextField onClick={() => { this.setState({ pickupTimeBegin: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup Start Period (MM:HR)" />
-              <TextField onClick={() => { this.setState({ pickupTimeEnd: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup End Period (MM:HR)" />
+              <TextField onChange={() => { this.setState({ pickupTimeBegin: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup Start Period (MM:HR)" />
+              <TextField onChange={() => { this.setState({ pickupTimeEnd: event.target.value }) }} className="pickup-period" fullWidth size="small" label="Pickup End Period (MM:HR)" />
             </div>
             <div className='flex-column create-posting-left'>
-              <TextField className="pickup-notes" multiline fullWidth rows={6} size="large" label="Pickup Notes" />
+              <TextField onChange={() => { this.setState({ notes: event.target.value }) }} className="pickup-notes" multiline fullWidth rows={6} size="large" label="Pickup Notes" />
             </div>
           </div>
           <Button onClick={() => this.submitForm()} variant="contained" sx={{ width: "50px" }} className="create-posting">

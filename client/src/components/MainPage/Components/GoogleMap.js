@@ -21,7 +21,7 @@ const TextComponent = ({ text }) => (
 class SimpleMap extends Component {
   render() {
     var defaultProps = {
-      center: { lat: 53.5461, lng: -113.4938 },
+      center: { lat: 53.5052, lng: -113.4938 },
       zoom: 11
     };
     console.log(this.props.latlng);
