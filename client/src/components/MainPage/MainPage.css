@@ -1,6 +1,22 @@
-.postings-column {
-  width: 50%;
-  padding: 20px;
-  border-radius: 5px;
+.postings-row {
+  width: 49%;
+  padding: 20px 0px;
+  border-radius: 10px;
 
+}
+
+.main-container {
+  padding: 30px 0px;
+}
+
+.maps-row {
+  width: 49%;
+  border-radius: 10px;
+  align-self: stretch;
+  padding: 20px 0 30px 0;
+}
+
+.create-posting {
+  width: 100%;
+  border-radius: 5px;
 }
