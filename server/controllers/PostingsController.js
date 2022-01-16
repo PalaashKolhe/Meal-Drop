@@ -26,5 +26,10 @@ const editPosting = async (req, res) => {
 
 }
 
-module.exports.createPosting = createPosting;
+const getPostings = async (req, res) => {
+  var allPostings = await mongoFoodPostings.find();
+  return res.status(200).json(allPostings);
+}
+
+module.exports = { createPosting, getPostings };
 

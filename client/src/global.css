@@ -18,6 +18,11 @@
   align-items: center;
 }
 
+.around-center {
+  justify-content: space-around;
+  align-items: center;
+}
+
 .start-start {
   justify-content: flex-start;
   align-items: flex-start;
@@ -38,10 +43,14 @@
   align-items: flex-end;
 }
 
+.start-center {
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .container {
   font-family: Arial, Helvetica, sans-serif;
   height: 100%;
-  width: 70%;
-  /* margin: 20px 140px; */
+  margin: 3% 15%;
 }
 

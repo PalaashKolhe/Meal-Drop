@@ -10,10 +10,6 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="App">
-        {/* <h1>MealDrop</h1> */}
-      </div>
-
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/main" component={MainPage} exact/>
